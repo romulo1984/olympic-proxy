@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 module.exports = (req, res) => {
     const API_URL = 'https://geql.globo.com/graphql'
 
