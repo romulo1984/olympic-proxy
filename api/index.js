@@ -6,9 +6,11 @@ const cors = require('cors')
 app.listen(80)
 
 app.use(cors())
-app.post('/', (req, res) => {
+app.post('/', async(req, res) => {
+    res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
     const API_URL = 'https://geql.globo.com/graphql'
-    axios.post(API_URL, {
+
+    const result = axios.post(API_URL, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
@@ -17,12 +19,17 @@ app.post('/', (req, res) => {
         console.log(response.data)
         console.log(response.headers)
         console.log(response.status)
-        return res.json(response)
+        return response
     }).catch(error => {
-        return res.json(error)
+        return error
+    })
+
+    res.send({
+        ...result
     })
 })
 
+module.exports = app
 
 // const axios = require('axios')
 
