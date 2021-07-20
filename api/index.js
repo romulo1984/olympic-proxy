@@ -6,7 +6,7 @@ const cors = require('cors')
 app.listen(80)
 
 app.use(cors())
-app.post('/', async(req, res) => {
+app.post('/api', async(req, res) => {
     res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
     const API_URL = 'https://geql.globo.com/graphql'
 
@@ -26,6 +26,12 @@ app.post('/', async(req, res) => {
 
     res.send({
         ...result
+    })
+})
+
+app.get('/api/test', async(req, res) => {
+    res.end({
+        data: 'Hello, people!'
     })
 })
 
