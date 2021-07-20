@@ -2,10 +2,13 @@ const express = require('express')
 const axios = require('axios')
 const app = express()
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 app.listen(80)
 
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.post('/api', async(req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
     const API_URL = 'https://geql.globo.com/graphql'
@@ -17,6 +20,7 @@ app.post('/api', async(req, res) => {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         },
+        data: req.body
     }).then(response => {
         console.log(response.data)
         console.log(response.headers)
