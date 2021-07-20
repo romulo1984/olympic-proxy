@@ -7,8 +7,10 @@ app.listen(80)
 
 app.use(cors())
 app.post('/api', async(req, res) => {
-    res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
     const API_URL = 'https://geql.globo.com/graphql'
+
+    console.log('api url', API_URL)
 
     const result = axios.post(API_URL, {
         headers: {
@@ -30,6 +32,7 @@ app.post('/api', async(req, res) => {
 })
 
 app.get('/api/test', (req, res) => {
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
     res.end(`Test route!`)
 })
 
