@@ -9,6 +9,39 @@ app.listen(80)
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+const query = `
+    query GET_MEDALS {
+        medalTable {
+            ranking
+            country {
+              code
+              name
+              flag {
+                svg {
+                  name
+                  url
+                  width
+                  height
+                  type
+                  rightsHolder
+                  isAnimated
+                }
+              }
+            }
+            gold
+            silver
+            bronze
+            total
+          }
+          sports {
+            code
+            name
+            hasMedal
+            imageURL(format: SVG)
+          }
+    }
+`
+
 app.post('/api', async(req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
     const API_URL = 'https://geql.globo.com/graphql'
@@ -20,7 +53,7 @@ app.post('/api', async(req, res) => {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         },
-        data: req.body
+        query
     }).then(response => {
         console.log(response.data)
         console.log(response.headers)
@@ -29,6 +62,8 @@ app.post('/api', async(req, res) => {
     }).catch(error => {
         return error
     })
+
+    console.log('result', JSON.stringify(result))
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
     res.write(JSON.stringify(result))
