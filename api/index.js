@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.post('/api', async(req, res) => {
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
+    res.setHeader('Cache-Control', 's-max-age=10, stale-while-revalidate')
     const API_URL = 'https://geql.globo.com/graphql'
 
     const result = await axios.post(API_URL, {
