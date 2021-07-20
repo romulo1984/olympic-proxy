@@ -26,14 +26,14 @@ app.post('/api', async(req, res) => {
         return error
     })
 
-    res.end({
-        ...result
-    })
+    res.writeHead(200, { 'Content-Type': 'application/json' })
+    res.write(JSON.stringify(result))
+    res.end()
 })
 
 app.get('/api/test', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
-    res.end(`Test route!`)
+    res.end(`Test route, again!`)
 })
 
 module.exports = app
