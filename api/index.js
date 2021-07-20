@@ -24,15 +24,13 @@ app.post('/api', async(req, res) => {
         return error
     })
 
-    res.send({
+    res.end({
         ...result
     })
 })
 
-app.get('/api/test', async(req, res) => {
-    res.end({
-        data: 'Hello, people!'
-    })
+app.get('/api/test', (req, res) => {
+    res.end(`Test route!`)
 })
 
 module.exports = app
